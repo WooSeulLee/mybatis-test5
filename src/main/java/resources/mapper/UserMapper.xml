@@ -17,4 +17,7 @@
     	</if>
     </where>
   </select>
+  <select id="selectUser" resultType = "com.mybatis.test.vo.UserVO">
+  	SELECT * FROM USER_INFO WHERE UI_NUM = #{ui_Num}
+  </select>
 </mapper>

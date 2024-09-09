@@ -20,6 +20,11 @@ public class UserServlet extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uri = request.getRequestURI();
+		int idx = uri.lastIndexOf("/");
+		String cmd = uri.substring(idx+1);
+		
+		if("user-list".equals(cmd)) {
 		UserVO user = new UserVO();
 		String uiNumStr = request.getParameter("uiNum");
 		if(uiNumStr !=null && !"".equals(uiNumStr)) {
@@ -32,7 +37,18 @@ public class UserServlet extends HttpServlet {
 		request.setAttribute("users", users);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/user-list.jsp");
 		rd.forward(request, response);
+		}else if("user-view".equals(cmd)) {
+			String uiNumStr = request.getParameter("uiNum");
+			int uiNum = Integer.parseInt(uiNumStr);
+			UserVO user = us.getUser(uiNum);
+			request.setAttribute("user", user);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/user-view.jsp");
+			rd.forward(request, response);
+		}
 	}
+		
+	
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

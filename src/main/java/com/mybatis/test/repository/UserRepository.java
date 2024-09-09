@@ -13,8 +13,16 @@ public class UserRepository {
 			return session.selectList("UserMapper.selectUsers",user);
 		}
 	}
+	
+	public UserVO selectUser(int uiNum){
+		try(SqlSession session = SqlMybatisConfig.getSessionFactory().openSession()){
+			return session.selectOne("UserMapper.selectUser",uiNum);
+		}
+	}
+	
 	public static void main(String[] args) {
 		UserRepository ur = new UserRepository();
 		System.out.println(ur.selectUsers(null));
 	}
+	
 }

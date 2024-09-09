@@ -11,4 +11,9 @@ public class UserService {
 	public List<UserVO> getUsers(UserVO user){
 		return ur.selectUsers(user);
 	}
+	
+	public UserVO getUser(int uiNum){
+		return ur.selectUser(uiNum);
+	}
+	
 }
