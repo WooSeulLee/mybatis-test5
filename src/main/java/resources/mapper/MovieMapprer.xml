@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MovieMapper">
+  <select id="selectMovies" resultType="com.mybatis.test.vo.MovieVO">
+  	SELECT * FROM MOVIE_INFO
+  	<where>
+  		<if test='miNum != 0'>
+  			AND MI_NUM = #{miNum}
+  		</if>
+  		<if test='miName != null and miName !="" '>
+  			AND MI_NAME = #{miName}
+  		</if>
+  		<if test='miYear != null and miYear !="" '>
+  			AND MI_YEAR =#{miYear}
+  		</if>
+  	</where>
+  
+  </select>
+</mapper>

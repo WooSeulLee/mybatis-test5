@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.mybatis.test.service.UserService;
+import com.mybatis.test.util.CMDUtil;
 import com.mybatis.test.vo.UserVO;
 
 @WebServlet("/UserServlet")
@@ -37,6 +38,7 @@ public class UserServlet extends HttpServlet {
 		request.setAttribute("users", users);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/user-list.jsp");
 		rd.forward(request, response);
+		
 		}else if("user-view".equals(cmd)) {
 			String uiNumStr = request.getParameter("uiNum");
 			int uiNum = Integer.parseInt(uiNumStr);
@@ -51,8 +53,36 @@ public class UserServlet extends HttpServlet {
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String cmd = CMDUtil.getCmd(request.getRequestURI());
+		UserVO user = new UserVO();
+		String uiNumStr = request.getParameter("uiNum");
+		if(uiNumStr != null && !"".equals(uiNumStr)) {
+			user.setUiNum(Integer.parseInt(uiNumStr));
+		}
+		user.setUiName(request.getParameter("uiName"));
+		user.setUiId(request.getParameter("uiId"));
+		user.setUiPwd(request.getParameter("uiPwd"));
+		user.setUiGender(request.getParameter("uiGender"));
+		user.setUiBirth(request.getParameter("uiBirth"));
+		user.setUiHobby(request.getParameter("uiHooby"));
+		user.setUiDesc(request.getParameter("uiDesc"));
+		String msg="";
+		String uri="";
+		if("user-insert".equals(cmd)) {
+			msg="등록에 실패하였습니다";
+			uri="/view/user/user-insert";
+			int result = us.insertUser(user);
+			if(result == 1) {
+				msg = "등록에 성공했습니다.";
+				uri="/user/user-list";
+			}
+			request.setAttribute("msg", msg);
+			request.setAttribute("uri", uri);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+			rd.forward(request, response);
+		}
 		
-		doGet(request, response);
 	}
 
 }

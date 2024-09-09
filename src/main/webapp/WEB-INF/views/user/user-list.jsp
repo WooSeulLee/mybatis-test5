@@ -9,10 +9,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/user">
+<form action="/views/user/user-insert">
 <%
 	List<UserVO> users = (List<UserVO>)request.getAttribute("users");
 %>
+
+<br>
 <table border ="1">
 	<tr>
 	<th>번호</th>
@@ -31,12 +33,7 @@ for(UserVO user : users){
 }
 %>
 </table>
-<br>
-<input type="text" name="uiNum" placeholder="유저 번호"><br>
-<input type="text" name="uiId" placeholder="유저 아이디"><br>
-<input type="text" name="uiName" placeholder="유저 이름"><br>
-<button>검색</button><br><br>
-
+<button onclick = "localhost.href='window.views/user/user-insert'">유저 등록</button>
 
 </form>
 </body>

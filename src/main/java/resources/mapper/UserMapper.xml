@@ -20,4 +20,28 @@
   <select id="selectUser" resultType = "com.mybatis.test.vo.UserVO">
   	SELECT * FROM USER_INFO WHERE UI_NUM = #{ui_Num}
   </select>
+  
+  <insert id="insertUser">
+  	INSERT INTO user_info(UI_NAME, UI_ID, UI_PWD, UI_GENDER,
+	UI_BIRTH, UI_HOBBY, UI_DESC)
+	VALUES (#{uiName}, #{uiId}, #{uiPwd}, #{uiGender},
+	#{uiBirth}, #{uiHobby}, #{uiDesc});
+  </insert>
+  
+  <update id="updateUser">
+	UPDATE user_info
+	SET UI_NAME = #{uiName},
+	UI_ID = #{uiId},
+	UI_PWD = #{uiPwd},
+	UI_GENDER = #{uiGender},
+	UI_BIRTH = #{uiBirth},
+	UI_HOBBY = #{uiHobby},
+	UI_DESC = #{uiDesc}
+	WHERE UI_NUM = #{uiNum}
+  </update>
+  
+  <delete id="deleteUser">
+  DELETE FROM user_info WHERE UI_NUM = #{uiNum}
+  </delete>
+  
 </mapper>
