@@ -6,12 +6,29 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
 <body>
-<h3>차량 등록</h3>
+
 <form method="POST" action="/car/car-insert">
-	<input type="text" name = "ciName" placeholder="모델명">
-	<input type="text" name = "ciYear" placeholder="년식">
-	<button>등록</button>
-	</form>
+	<table border="1">
+		
+		<tr>
+			<th>모델명</th>
+			<td><input type="text" name="ciName"></td>
+		</tr>
+		<tr>
+			<th>년식</th>
+			<td><input type="text" name="ciYear"></td>
+		</tr>
+		<tr>
+			<th colspan="2">
+				<button>등록</button>
+			</th>
+		</tr>
+	</table>
+</form>
+
+<br>
+<button onclick="location.href='/car/car-list'">목록보기</button>
 </body>
 </html>

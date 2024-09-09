@@ -22,8 +22,7 @@ public class UserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uri = request.getRequestURI();
-		int idx = uri.lastIndexOf("/");
-		String cmd = uri.substring(idx+1);
+		String cmd = CMDUtil.getCmd(uri);
 		
 		if("user-list".equals(cmd)) {
 		UserVO user = new UserVO();
@@ -36,17 +35,16 @@ public class UserServlet extends HttpServlet {
 		
 		List<UserVO> users = us.getUsers(user);
 		request.setAttribute("users", users);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/user-list.jsp");
-		rd.forward(request, response);
 		
-		}else if("user-view".equals(cmd)) {
+		}else if("user-view".equals(cmd) || "user-update".equals(cmd)) {
 			String uiNumStr = request.getParameter("uiNum");
 			int uiNum = Integer.parseInt(uiNumStr);
 			UserVO user = us.getUser(uiNum);
 			request.setAttribute("user", user);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/user-view.jsp");
-			rd.forward(request, response);
+			
 		}
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views" + uri+ ".jsp");
+		rd.forward(request, response);
 	}
 		
 	
@@ -81,8 +79,30 @@ public class UserServlet extends HttpServlet {
 			request.setAttribute("uri", uri);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 			rd.forward(request, response);
-		}
+		}else if("user-update".equals(cmd)) {
+			msg = "유저 정보 수정이 실패 하였습니다.";
+			uri = "/views/user/user-update?uiNum=" + uiNumStr;
+			
+			int result = us.updateUser(user);
+			if(result==1) {
+				msg = "유저 정보 수정이 성공 하였습니다.";
+				uri = "/user/user-view?uiNum=" + uiNumStr;
+			}
 		
-	}
+		}else if("user-delete".equals(cmd)) {
+			msg = "유저 정보 삭제가 실패 하였습니다.";
+			uri = "/views/user/user-update?uiNum=" + uiNumStr;
+			
+			int result = us.deleteUser(user);
+			if(result==1) {
+				msg = "유저 정보가 삭제되었습니다.";
+				uri = "/user/user-list";
+			}
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("uri", uri);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		rd.forward(request, response);
 
+	}
 }

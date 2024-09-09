@@ -16,13 +16,15 @@ public class CarService {
 		return cr.selectCar(ciNum);
 	}
 	
-	public int insertCar(CarVO car) {
-		return cr.insertCar(car);
+	public int insertCar(CarVO Car) {
+		return cr.insertCar(Car);
 	}
-	public int updateCar(CarVO car) {
-		return cr.insertCar(car);
+	
+	public int updateCar(CarVO Car) {
+		return cr.updateCar(Car);
 	}
-	public int deleteCar(CarVO car) {
-		return cr.insertCar(car);
+	
+	public int deleteCar(CarVO Car) {
+		return cr.deleteCar(Car);
 	}
 }
